@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    #root{
+        display: grid;
+        grid-template-rows: 48px auto;
+        height: 100vh;
+    }
+}
