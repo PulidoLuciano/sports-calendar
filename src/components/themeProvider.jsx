@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, createContext, useEffect } from "react"
-import Header from "./header";
+import {createContext} from "react"
+import Header from "@/components/header";
 import useTheme from "@/utils/useTheme";
 
 export const ThemeContext = createContext(null);
@@ -11,7 +11,7 @@ export default function ThemeProvider({children}){
     const {theme, changeTheme} = useTheme();
 
     return(
-        <ThemeContext.Provider value={changeTheme}>
+        <ThemeContext.Provider value={{theme, changeTheme}}>
             <div id="root" className={`${theme}`}>
                 <Header></Header>
                 <main className={`bg-white dark:bg-black`}>
