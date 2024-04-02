@@ -1,14 +1,6 @@
 const {sql} = require("@vercel/postgres");
 require("dotenv").config();
 
-async function createUsersTable(){
-    sql`CREATE TABLE IF NOT EXIST users (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY_KEY,
-        name VARCHAR(50) NOT NULL,
-
-    )`
-}
-
 async function createLeaguesTable(client){
     try{
         await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -45,14 +37,18 @@ async function createTeamsTable(client){
     }
 }
 
-function createSuscribeTable(){
-    
-}
-
 async function populateLeaguesTable(client){
     try{
+        client.sql`DELETE FROM leagues`;
+        
+        let canContinue = true;
         for(let i = 0; i < LEAGUES.length; i++)
         {
+            const initialDate = Date.now();
+            while(!canContinue){
+                if(Date.now() - initialDate > 70000)
+                    canContinue = true;
+            }
             const league = LEAGUES[i];
             let api = await fetch(`https://v3.football.api-sports.io/leagues?id=${league.apiId}&current=true`, {
                 method: "GET",
@@ -62,6 +58,12 @@ async function populateLeaguesTable(client){
                 }
             });
             api = await api.json();
+
+            if(api.errors.length != 0){
+                canContinue = false;
+                i--;
+                continue;
+            }
 
             await client.sql`INSERT INTO leagues (name, apiId, currentYear, logo)
                 VALUES (${league.name}, ${league.apiId}, ${api.response[0].seasons[0].year}, ${league.logo})`;
@@ -74,12 +76,21 @@ async function populateLeaguesTable(client){
 
 async function populateTeamsTable(client){
     try{
+        client.sql`DELETE FROM teams`
+
         let leagues = await client.sql`SELECT id,apiId,currentYear FROM leagues`;
         leagues = leagues.rows;
+        let canContinue = true;
         for(let i = 0; i < leagues.length; i++)
         {
+            const initialDate = Date.now();
+            while(!canContinue){
+                if(Date.now() - initialDate > 70000)
+                    canContinue = true;
+            }
+
             const league = leagues[i];
-            let api = await fetch(`https://v3.football.api-sports.io/standings?league=${league.apiid}&season=${league.currentyear}`, {
+            let api = await fetch(`https://v3.football.api-sports.io/teams?league=${league.apiid}&season=${league.currentyear}`, {
                 method: "GET",
                 headers: {
                     "x-rapidapi-host": process.env.X_RAPIDAPI_HOST,
@@ -87,13 +98,22 @@ async function populateTeamsTable(client){
                 }
             });
             api = await api.json();
-            api = api.response[0].league.standings[0];
+
+            if(api.errors.length != 0){
+                canContinue = false;
+                i--;
+                console.log("Wait 70000ms");
+                continue;
+            }
+
+            api = api.response;
             for(let j = 0; j < api.length; j++){
                 let team = {
                     name: api[j].team.name,
                     apiId: api[j].team.id,
-                    leagueId: league.id,
+                    leagueId: leagues[i].id,
                 }
+                console.log(team);
                 await client.sql`INSERT INTO teams (name, apiId, league_id)
                     VALUES (${team.name}, ${team.apiId}, ${team.leagueId})`;
             }
@@ -105,16 +125,19 @@ async function populateTeamsTable(client){
 }
 
 async function main(){
-    const client = await sql.connect();
+    let client = await sql.connect();
 
     //CREATE TABLES
     await createLeaguesTable(client);
     await createTeamsTable(client);
     
-    //POPULATE TABLES
-    //await populateLeaguesTable(client);
+    //POPULATE LEAGUE TABLE
+    await populateLeaguesTable(client);
+    await client.end();
+
+    //POPULATE TEAMS TABLE
+    client = await sql.connect();
     await populateTeamsTable(client);
-    
     await client.end();
 }
 
@@ -124,101 +147,71 @@ const LEAGUES = [
     {
         apiId: 128,
         name: "Liga Profesional de Fútbol",
-        logo: "/leagues/128",
+        logo: "/leagues/128.png",
     },
     {
         apiId: 129,
         name: "Primera B Nacional",
-        logo: "/leagues/129",
+        logo: "/leagues/129.png",
     },
     {
         apiId: 71,
         name: "Brasileirão",
-        logo: "/leagues/71",
+        logo: "/leagues/71.png",
     },
     {
         apiId: 39,
         name: "Premier League",
-        logo: "/leagues/39",
+        logo: "/leagues/39.png",
     },
     {
         apiId: 140,
         name: "La Liga",
-        logo: "/leagues/140",
+        logo: "/leagues/140.png",
     },
     {
         apiId: 135,
         name: "Serie A",
-        logo: "/leagues/135",
+        logo: "/leagues/135.png",
     },
     {
         apiId: 78,
         name: "Bundesliga",
-        logo: "/leagues/78",
+        logo: "/leagues/78.png",
     },
     {
         apiId: 61,
         name: "League One",
-        logo: "/leagues/61",
+        logo: "/leagues/61.png",
     },
     {
         apiId: 30,
         name: "AFC",
-        logo: "/leagues/30",
+        logo: "/leagues/30.png",
     },
     {
         apiId: 29,
         name: "CAF",
-        logo: "/leagues/29",
+        logo: "/leagues/29.png",
     },
     {
         apiId: 32,
         name: "UEFA",
-        logo: "/leagues/32",
+        logo: "/leagues/32.png",
     },
     {
         apiId: 34,
         name: "CONMEBOL",
-        logo: "/leagues/34",
+        logo: "/leagues/34.png",
     },
     {
         apiId: 31,
         name: "CONCACAF",
-        logo: "/leagues/31",
+        logo: "/leagues/31.png",
     },
     {
         apiId: 33,
         name: "OFC",
-        logo: "/leagues/33",
+        logo: "/leagues/33.png",
     },
 ]
-
-const fakeResponse = {
-    get: "standings",
-    parameters: {
-    },
-    errors: [
-    ],
-    results: 1,
-    paging: {
-    },
-    response: [
-    {
-    league: {
-    id: 39,
-    name: "Premier League",
-    country: "England",
-    logo: "https://media.api-sports.io/football/leagues/39.png",
-    flag: "https://media.api-sports.io/flags/gb.svg",
-    season: 2023,
-    standings: [
-    [
-    {
-    rank: 1,
-    team: {
-    id: 42,
-    name: "Arsenal",
-    logo: "https://media.api-sports.io/football/teams/42.png"
-    },
-    points: 64
-    }]]}}]}
