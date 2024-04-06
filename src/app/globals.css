@@ -6,7 +6,7 @@
     #root{
         display: grid;
         grid-template-rows: 48px auto;
-        height: 100vh;
+        min-height: 100vh;
     }
 
     h1, h2, h3, p{
@@ -14,7 +14,7 @@
     }
 
     h1, h2, h3{
-        @apply text-pretty
+        @apply text-balance
     }
 
     h1{
@@ -30,6 +30,6 @@
     }
 
     p{
-        @apply text-balance
+        @apply text-pretty
     }
 }
