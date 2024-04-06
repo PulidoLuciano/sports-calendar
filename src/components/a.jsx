@@ -3,10 +3,10 @@
 import { useContext } from "react";
 import { LanguageContext } from "./LanguageProvider";
 
-export default function H3({text, className}){
+export default function A({text, className, href}){
     const languageContext = useContext(LanguageContext);
 
     return(
-        <h3 className={className}>{languageContext.text[text]}</h3>
+        <a className={className} href={href}>{languageContext.text[text]}</a>
     )
 }
