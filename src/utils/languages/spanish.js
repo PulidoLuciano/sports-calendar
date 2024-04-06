@@ -14,5 +14,6 @@ export default {
     step_three: "En la página de google calendar verás al lado izquierdo inferior una sección llamada 'Otros calendarios' con un '+' al lado. Haz click sobre el '+'",
     step_four: "Se abrirá una lista de opciones, haz click sobre la opción 'Desde URL'.",
     step_five: "Allí deberás pegar el link (con click derecho y pegar o Ctrl+V) y luego pulsar el botón 'Añadir calendario'",
-    tutorial_two: "¡Felicidades! Estás suscrito al calendario de tu equipo y nunca más te perderás un partido."
+    tutorial_two: "¡Felicidades! Estás suscrito al calendario de tu equipo y nunca más te perderás un partido.",
+    made: "Hecho con ❤️ por "
 }

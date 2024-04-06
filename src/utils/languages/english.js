@@ -14,5 +14,6 @@ export default{
     step_three: "On the Google calendar page you will see on the lower left side a section called 'Other calendars' with a '+' next to it. Click on the '+'",
     step_four: "A list of options will open, click on the 'From URL' option.",
     step_five: "There you must paste the link (with right click and paste or Ctrl+V) and then press the 'Add calendar' button",
-    tutorial_two: "Congratulations! You are subscribed to your team calendar and you never will lost a game again."
+    tutorial_two: "Congratulations! You are subscribed to your team calendar and you never will lost a game again.",
+    made: "Made with ❤️ by"
 }

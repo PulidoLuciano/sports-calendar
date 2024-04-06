@@ -13,10 +13,7 @@ export default function ThemeProvider({children}){
     return(
         <ThemeContext.Provider value={{theme, changeTheme}}>
             <div id="root" className={`${theme}`}>
-                <Header></Header>
-                <main className={`bg-white dark:bg-black scroll-smooth`}>
-                    {children}
-                </main>
+                {children}
             </div>
         </ThemeContext.Provider>
     )
