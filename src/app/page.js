@@ -4,7 +4,6 @@ import H2 from "@/components/h2";
 import H3 from "@/components/h3";
 import LeagueButton from "@/components/leagueButton";
 import P from "@/components/p";
-import Link from "next/link";
 import { fetchLeagues } from "@/utils/dbFetching";
 
 export default async function Home() {
