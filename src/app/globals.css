@@ -8,4 +8,28 @@
         grid-template-rows: 48px auto;
         height: 100vh;
     }
+
+    h1, h2, h3, p{
+        @apply text-black dark:text-white
+    }
+
+    h1, h2, h3{
+        @apply text-pretty
+    }
+
+    h1{
+        @apply text-6xl font-bold
+    }
+
+    h2{
+        @apply text-4xl font-semibold
+    }
+
+    h3{
+        @apply text-2xl font-semibold
+    }
+
+    p{
+        @apply text-balance
+    }
 }
