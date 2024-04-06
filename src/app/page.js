@@ -22,7 +22,7 @@ export default async function Home() {
         <H3 text={"notKnow"} className={"text-center pb-2"}/>
         <div className="flex gap-1 justify-center">
           <P text={"watch"}/>
-          <Link href="/tutorial"><P text={"tutorial"} className={"text-secondary underline md:text-center"}/></Link>
+          <A text={"tutorial"} href={"#tutorial"} className={"text-secondary underline md:text-center"}/>
         </div>
       </header>
       <section className="p-3 lg:p-0 mx-auto max-w-4xl" id="leagues">
@@ -33,6 +33,18 @@ export default async function Home() {
           }    
         </div>
       </section>
+      <section className="mt-16 p-3 mb-16 lg:p-0 mx-auto max-w-4xl" id="tutorial">
+        <H2 text={"howTo"} className={"mb-3"}/>
+        <P text={"tutorial_one"}/>
+        <ol className="list-decimal pl-8 pt-6 marker:font-bold marker:dark:text-white">
+            <li className="pb-3"><P text={"step_one"}/></li>
+            <li className="pb-3"><P text={"step_two"}/></li>
+            <li className="pb-3"><P text={"step_three"}/></li>
+            <li className="pb-3"><P text={"step_four"}/></li>
+            <li className="pb-3"><P text={"step_five"}/></li>
+        </ol>
+        <P text={"tutorial_two"} className={"mt-3"}/>
+      </section> 
     </>
   );
 }
