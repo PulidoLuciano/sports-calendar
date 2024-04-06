@@ -28,7 +28,7 @@ export default async function Home() {
         <H2 text={"available"}/>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3">
           {
-            leagues.map((league) => <LeagueButton name={league.name} logo={league.logo} id={league.id}/>)
+            leagues.map((league) => <LeagueButton key={league.id} name={league.name} logo={league.logo} id={league.id}/>)
           }    
         </div>
       </section>
