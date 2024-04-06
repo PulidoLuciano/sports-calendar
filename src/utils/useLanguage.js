@@ -7,15 +7,23 @@ export default function useLanguage(){
     const [text, setText] = useState(english);
 
     useEffect(() => {
-        setLanguage(localStorage.getItem("language") ?? (LANGUAGES.includes(navigator.language.split("-")[0])) ? navigator.language.split("-")[0] : "en");
-    }, [])
+        let storedLanguage = localStorage.getItem("lang");
+        if(storedLanguage){
+            setLanguage(storedLanguage);
+        }else{ 
+            let navigatorLanguage = (navigator.language == "es") ? "es" : "en"
+            setLanguage(navigatorLanguage);
+            localStorage.setItem("lang", navigatorLanguage);
+        }
+    }, []);
 
     useEffect(() => {
-        setText((language == "en") ? english : spanish);
+        setText((language == "en") ? english : spanish);       
     }, [language]);
 
     function changeLanguage(newLanguage){
         setLanguage(newLanguage);
+        localStorage.setItem("lang", newLanguage);
     }
 
     return {text, language, changeLanguage};
