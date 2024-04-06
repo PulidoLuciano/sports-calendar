@@ -10,7 +10,7 @@ export default function TeamItem({name, logo}){
                     <img src="/copy.svg" alt="Copy icon" className="dark:invert"/>
                 </button>
             </article>
-            <hr/>
+            <hr className="text-black dark:text-white"/>
         </>
     )
 }
