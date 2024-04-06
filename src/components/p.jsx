@@ -3,10 +3,10 @@
 import { useContext } from "react";
 import { LanguageContext } from "./LanguageProvider";
 
-export default function P({text}){
+export default function P({text, className}){
     const languageContext = useContext(LanguageContext);
 
     return(
-        <p>{languageContext.text[text]}</p>
+        <p className={className}>{languageContext.text[text]}</p>
     )
 }
