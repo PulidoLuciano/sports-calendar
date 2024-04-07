@@ -3,6 +3,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/themeProvider";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import SessionWrapper from "@/components/sessionWrapper";
 
 export const metadata = {
   title: "SportsCalendar",
@@ -11,18 +12,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-white dark:bg-black">
-        <LanguageProvider>
-          <ThemeProvider>
-            <Header/>
-            <main className={`bg-white dark:bg-black scroll-smooth`}>
-              {children}
-            </main>
-            <Footer/>
-          </ThemeProvider>
-        </LanguageProvider>
-      </body>
-    </html>
+    <SessionWrapper>
+      <html lang="en">
+        <body className="bg-white dark:bg-black">
+          <LanguageProvider>
+            <ThemeProvider>
+              <Header/>
+              <main className={`bg-white dark:bg-black scroll-smooth`}>
+                {children}
+              </main>
+              <Footer/>
+            </ThemeProvider>
+          </LanguageProvider>
+        </body>
+      </html>
+    </SessionWrapper>
   );
 }
