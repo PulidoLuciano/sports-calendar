@@ -1,8 +1,11 @@
 "use client"
-import { useSession } from "next-auth/react"
+import { suscribe } from "@/app/lib/actions.js";
+import { useSession } from "next-auth/react";
+import { useFormState } from 'react-dom';
 
-export default function TeamItem({name, logo}){ 
+export default function TeamItem({name, logo, id}){ 
     const {data: session} = useSession();
+    const [errorMessage, dispatch] = useFormState(suscribe ,undefined);
     
     return(
         <>
@@ -14,9 +17,14 @@ export default function TeamItem({name, logo}){
                 {
                     (session) 
                     ?
-                    <button>
-                    <img src="/copy.svg" alt="Copy icon" className="dark:invert"/>
-                    </button>
+                    <form action={dispatch}>
+                        <input type="text" className="hidden" value={id} name="teamId" readOnly={true}/>
+                        <input type="text" className="hidden" value={session.user.email} name="email" readOnly={true}/>
+                        <button>
+                            Suscribe
+                        </button>  
+                    </form>
+                    
                     :
                     null
                 } 
