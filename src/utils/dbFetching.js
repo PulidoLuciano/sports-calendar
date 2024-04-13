@@ -6,7 +6,7 @@ export async function fetchLeagues(){
 }
 
 export async function fetchTeamsByLeague(leagueId){
-    const teams = await sql`SELECT name, logo, apiid FROM teams WHERE league_id=${leagueId} ORDER BY name`;
+    const teams = await sql`SELECT name, logo, id FROM teams WHERE league_id=${leagueId} ORDER BY name`;
     return teams.rows;
 }
 

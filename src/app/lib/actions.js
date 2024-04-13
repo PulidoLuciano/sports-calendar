@@ -1,10 +1,13 @@
 "use server"
+
+import { sql } from "@vercel/postgres";
+
 /*
 //EJEMPLO PARA CREAR COSAS
 export async function createRandomEvent(){
     
     AdminAuth.setCredentials({
-        access_token: "ya29.a0Ad52N3_0sz9WgQPw7-Xo2vg85cXhuhsK4FsIssZZWp9PZ3NEykxynDTltKatHkOJO1dlhq7KG5Fau34ik-HPtEClXO-cvsoityY67d7ntGmiyiX1Fb84H0pMpx5zYdSDsxn-H3SvyfhK1hOcMla65wT3otPkV0JfqacqaCgYKAbwSARASFQHGX2MiD9WDonyQ4DwRZabnF4_EFg0171"
+        access_token: access_token
     })
     
     const adminCalendar = google.calendar({version: "v3", auth: AdminAuth});
@@ -26,13 +29,13 @@ export async function createRandomEvent(){
         }
     }
 
-    adminCalendar.events.insert({calendarId: "7cb95c8c65787ba1d4d202dbfc1f326dcb94770d58f430fec25c0939d1684ba3@group.calendar.google.com", resource: newEvent});
+    adminCalendar.events.insert({calendarId: calendarId, resource: newEvent});
 
     let newAcl = {
         role: "reader",
         scope: {
             type: "user",
-            value: "lucianonicolaspulido@gmail.com"
+            value: "user@gmail.com"
         }
     }
 
@@ -41,10 +44,22 @@ export async function createRandomEvent(){
 */
 
 export async function suscribe(_, formData){
-    let userEmail = formData.get('email');
-    let teamId = formData.get('teamId');
+    try{
+        let userEmail = formData.get('email');
+        let teamId = formData.get('teamId');
+    
+        let entries = await sql`SELECT id FROM suscribes WHERE userid=(SELECT id FROM users WHERE email=${userEmail}) AND teamid=${teamId}`;
+        entries = entries.rows;
 
-    console.log(userEmail, teamId);
+        if(entries.length == 0){
+            await sql`INSERT INTO suscribes (userid, teamid) VALUES ((SELECT id FROM users WHERE email=${userEmail}), ${teamId})`;
+        }else{
+            await sql`DELETE FROM suscribes WHERE id=${entries[0].id}`;
+        }
+        
+    }catch(error){
+        console.error(error);
+    }
 }
 
 
