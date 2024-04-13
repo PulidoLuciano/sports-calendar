@@ -37,6 +37,37 @@ async function createTeamsTable(client){
     }
 }
 
+async function createUsersTable(client){
+    try{
+        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+        
+        await client.sql`CREATE TABLE IF NOT EXISTS users (
+            id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            email VARCHAR(255) NOT NULL
+        )`
+
+        console.log("Created users table");
+    }catch(error){
+        console.error("Error creating users table: ", error);
+    }
+}
+
+async function createSuscribeTable(client){
+    try{
+        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+        
+        await client.sql`CREATE TABLE IF NOT EXISTS suscribes (
+            id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+            teamId UUID references teams(id),
+            userId UUID references users(id)
+        )`
+
+        console.log("Created suscribe table");
+    }catch(error){
+        console.error("Error creating suscribe table: ", error);
+    }
+}
+
 async function populateLeaguesTable(client){
     try{
         client.sql`DELETE FROM leagues`;
@@ -130,6 +161,8 @@ async function main(){
     //CREATE TABLES
     await createLeaguesTable(client);
     await createTeamsTable(client);
+    await createUsersTable(client);
+    await createSuscribeTable(client);
     
     //POPULATE LEAGUE TABLE
     await populateLeaguesTable(client);
