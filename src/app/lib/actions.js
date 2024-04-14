@@ -3,47 +3,6 @@
 import { google } from "googleapis";
 import { sql } from "@vercel/postgres";
 
-/*
-//EJEMPLO PARA CREAR COSAS
-export async function createRandomEvent(){
-    
-    AdminAuth.setCredentials({
-        access_token: access_token
-    })
-    
-    const adminCalendar = google.calendar({version: "v3", auth: AdminAuth});
-
-    let newCalendar = {
-        summary: "Test",
-    }
-
-    newCalendar = await adminCalendar.calendars.insert({resource: newCalendar});
-
-    let newEvent = {
-        summary: "Test Event 2",
-        description: "Hello this is a test event",
-        start: {
-            date: "2024-04-09"
-        },
-        end: {
-            date: "2024-04-09"
-        }
-    }
-
-    adminCalendar.events.insert({calendarId: calendarId, resource: newEvent});
-
-    let newAcl = {
-        role: "reader",
-        scope: {
-            type: "user",
-            value: "user@gmail.com"
-        }
-    }
-
-    newAcl = await adminCalendar.acl.insert({calendarId: newCalendar.data.id, resource: newAcl});
-}
-*/
-
 export async function suscribe(_, formData){
     try{
         let userEmail = formData.get('email');
