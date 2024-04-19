@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "populate": "node ./src/utils/populate.js"
+    "populate": "node ./src/utils/populate.js",
+    "update": "node ./src/utils/updateAllCalendars.mjs"
   },
   "dependencies": {
     "@vercel/postgres": "^0.7.2",
