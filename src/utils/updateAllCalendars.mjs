@@ -53,7 +53,7 @@ export async function updateTeamCalendar(teamId){
 
     const { calendarid, apiid } = teamIds.rows[0];
 
-    deleteAllEvents(calendarid, adminCalendar);
+    if(calendarid) deleteAllEvents(calendarid, adminCalendar);
 
     let api = await fetch(`https://v3.football.api-sports.io/fixtures?team=${apiid}&next=99`, {
         method: "GET",
