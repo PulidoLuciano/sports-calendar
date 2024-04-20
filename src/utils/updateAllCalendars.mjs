@@ -7,7 +7,6 @@ import { google } from "googleapis";
 import { configDotenv } from "dotenv";
 
 configDotenv();
-updateAllTeams();
 
 async function updateAllTeams(){
     let limit = 60;
