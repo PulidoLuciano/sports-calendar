@@ -40,7 +40,6 @@ export default async function Home() {
             <li className="pb-3"><P text={"step_two"}/></li>
             <li className="pb-3"><P text={"step_three"}/></li>
             <li className="pb-3"><P text={"step_four"}/></li>
-            <li className="pb-3"><P text={"step_five"}/></li>
         </ol>
         <P text={"tutorial_two"} className={"mt-3"}/>
       </section> 

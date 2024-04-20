@@ -9,11 +9,10 @@ export default {
     available: "Ligas disponibles",
     howTo: "Como suscribirte al calendario de un equipo",
     tutorial_one: "SportsCalendar es una página que te brinda calendarios que puedes añadir a tu calendario de google. Estos cuentan con todos los partidos de tus equipos favoritos ya programados. El procedimiento para suscribirse al calendario de un equipo es muy sencillo y te lo explicamos a continuación:",
-    step_one: "Elige la liga de tu equipo en la página principal, luego haz click en el botón 'Copiar' para copiar el link del calendario en el portapapeles de tu dispositivo.",
-    step_two: "Ve a la página de google calendar.",
-    step_three: "En la página de google calendar verás al lado izquierdo inferior una sección llamada 'Otros calendarios' con un '+' al lado. Haz click sobre el '+'",
-    step_four: "Se abrirá una lista de opciones, haz click sobre la opción 'Desde URL'.",
-    step_five: "Allí deberás pegar el link (con click derecho y pegar o Ctrl+V) y luego pulsar el botón 'Añadir calendario'",
+    step_one: "Inicia sesión con tu cuenta de google.",
+    step_two: "Elige la liga de tu equipo en la página principal, luego haz click en la estrella para suscribirte al calendario.",
+    step_three: "Google te enviará un e-mail. Debes pulsar en la opción de añadir inventario en ese e-mail.",
+    step_four: "Si quieres dejar de ver el calendario del equipo debes pulsar la estrella nuevamente.",
     tutorial_two: "¡Felicidades! Estás suscrito al calendario de tu equipo y nunca más te perderás un partido.",
     made: "Hecho con ❤️ por "
 }
