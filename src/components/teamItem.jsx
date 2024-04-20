@@ -1,12 +1,22 @@
 "use client"
 import { suscribe } from "@/app/lib/actions.js";
+import { userSuscribe } from "@/utils/dbFetching";
 import { useSession } from "next-auth/react";
 import { useFormState } from 'react-dom';
+import { useEffect, useState } from "react";
 
 export default function TeamItem({name, logo, id}){ 
     const {data: session} = useSession();
     const [errorMessage, dispatch] = useFormState(suscribe ,undefined);
+    const [isSuscribe, setIsSuscribe] = useState(null);
     
+    useEffect(() => {
+        if(session)
+        fetch(`/api/suscribe?user=${session.user.email}&team=${id}`).then((res) => res.json()).then((data) => {
+            setIsSuscribe(data);
+        })
+    }, [session])
+
     return(
         <>
             <article className="flex p-2 items-center justify-between">
@@ -20,11 +30,15 @@ export default function TeamItem({name, logo, id}){
                     <form action={dispatch}>
                         <input type="text" className="hidden" value={id} name="teamId" readOnly={true}/>
                         <input type="text" className="hidden" value={session.user.email} name="email" readOnly={true}/>
-                        <button>
-                            Suscribe
+                        <button onClick={() => { setIsSuscribe(!isSuscribe)}}>
+                            {
+                                (isSuscribe) ?
+                                <img src="/starFill.svg" alt="Suscribe icon" />
+                                :
+                                <img src="/star.svg" alt="No suscribe icon" />
+                            }
                         </button>  
                     </form>
-                    
                     :
                     null
                 } 

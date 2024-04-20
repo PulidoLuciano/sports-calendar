@@ -1,4 +1,3 @@
-import H2 from "@/components/h2";
 import TeamItem from "@/components/teamItem";
 import { fetchTeamsByLeague, fetchLeagueById } from "@/utils/dbFetching";
 

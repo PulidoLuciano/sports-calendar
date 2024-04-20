@@ -14,3 +14,9 @@ export async function fetchLeagueById(leagueId){
     let league = await sql`SELECT name, logo FROM leagues WHERE id=${leagueId}`
     return league.rows[0];
 }
+
+export async function userSuscribe(teamId, userEmail){
+    let user = await sql`SELECT id FROM users WHERE email=${userEmail}`;
+    let suscribe = await sql`SELECT id FROM suscribes WHERE teamid=${teamId} AND userid=${user.rows[0].id}`;
+    return (suscribe.rowCount > 0);
+}
