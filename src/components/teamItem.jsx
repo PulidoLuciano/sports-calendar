@@ -1,13 +1,9 @@
 "use client"
-import { suscribe } from "@/app/lib/actions.js";
-import { userSuscribe } from "@/utils/dbFetching";
 import { useSession } from "next-auth/react";
-import { useFormState } from 'react-dom';
 import { useEffect, useState } from "react";
 
 export default function TeamItem({name, logo, id}){ 
     const {data: session} = useSession();
-    const [errorMessage, dispatch] = useFormState(suscribe ,undefined);
     const [isSuscribe, setIsSuscribe] = useState(null);
     
     useEffect(() => {
@@ -15,7 +11,14 @@ export default function TeamItem({name, logo, id}){
         fetch(`/api/suscribe?user=${session.user.email}&team=${id}`).then((res) => res.json()).then((data) => {
             setIsSuscribe(data);
         })
-    }, [session])
+    }, [session]);
+
+    function handleClick(){
+        setIsSuscribe(!isSuscribe)
+        fetch(`/api/suscribe?user=${session.user.email}&team=${id}`, {
+            method: "POST"
+        })
+    }
 
     return(
         <>
@@ -27,18 +30,14 @@ export default function TeamItem({name, logo, id}){
                 {
                     (session) 
                     ?
-                    <form action={dispatch}>
-                        <input type="text" className="hidden" value={id} name="teamId" readOnly={true}/>
-                        <input type="text" className="hidden" value={session.user.email} name="email" readOnly={true}/>
-                        <button onClick={() => { setIsSuscribe(!isSuscribe)}}>
-                            {
-                                (isSuscribe) ?
-                                <img src="/starFill.svg" alt="Suscribe icon" />
-                                :
-                                <img src="/star.svg" alt="No suscribe icon" />
-                            }
-                        </button>  
-                    </form>
+                    <button onClick={handleClick}>
+                        {
+                            (isSuscribe) ?
+                            <img src="/starFill.svg" alt="Suscribe icon" />
+                            :
+                            <img src="/star.svg" alt="No suscribe icon" />
+                        }
+                    </button>  
                     :
                     null
                 } 

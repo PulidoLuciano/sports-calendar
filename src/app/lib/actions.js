@@ -4,11 +4,8 @@ import { google } from "googleapis";
 import { sql } from "@vercel/postgres";
 import { updateTeamCalendar } from "@/utils/updateAllCalendars.mjs";
 
-export async function suscribe(_, formData){
+export async function suscribe(userEmail, teamId){
     try{
-        let userEmail = formData.get('email');
-        let teamId = formData.get('teamId');
-        
         const adminAuth = new google.auth.OAuth2(
             process.env.GOOGLE_CLIENT_ID,
             process.env.GOOGLE_CLIENT_SECRET
