@@ -33,9 +33,9 @@ export default function TeamItem({name, logo, id}){
                     <button onClick={handleClick}>
                         {
                             (isSuscribe) ?
-                            <img src="/starFill.svg" alt="Suscribe icon" />
+                            <img src="/starFill.svg" alt="Suscribe icon" className="invert dark:invert-0"/>
                             :
-                            <img src="/star.svg" alt="No suscribe icon" />
+                            <img src="/star.svg" alt="No suscribe icon" className="invert dark:invert-0"/>
                         }
                     </button>  
                     :
