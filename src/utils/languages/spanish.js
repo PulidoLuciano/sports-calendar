@@ -14,5 +14,6 @@ export default {
     step_three: "Google te enviará un e-mail. Debes pulsar en la opción de añadir inventario en ese e-mail.",
     step_four: "Si quieres dejar de ver el calendario del equipo debes pulsar la estrella nuevamente.",
     tutorial_two: "¡Felicidades! Estás suscrito al calendario de tu equipo y nunca más te perderás un partido.",
-    made: "Hecho con ❤️ por "
+    made: "Hecho con ❤️ por ",
+    copyright: "Ninguno de los logos mostrados son propiedad de sports-calendar, pertenecen a sus respectivos equipos y ligas, y solo se muestran con carácter ilustrativo."
 }

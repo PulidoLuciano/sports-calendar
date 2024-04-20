@@ -14,5 +14,6 @@ export default{
     step_three: "Google will send you an e-mail, you have to click the add calendar option in that e-mail.",
     step_four: "If you don't want to be suscribe to a calendar anymore, you have to click on the star again.",
     tutorial_two: "Congratulations! You are subscribed to your team calendar and you never will lost a game again.",
-    made: "Made with ❤️ by"
+    made: "Made with ❤️ by",
+    copyright: "None of the logos shown are the property of sports-calendar, they belong to their respective teams and leagues, and are shown for illustrative purposes only."
 }
