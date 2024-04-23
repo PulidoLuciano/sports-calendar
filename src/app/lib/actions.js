@@ -14,8 +14,7 @@ export async function suscribe(userEmail, teamId){
             refresh_token: process.env.ADMIN_REFRESH_TOKEN
         });
         const adminCalendar = google.calendar({version: "v3", auth: adminAuth});
-
-        console.log(suscribe);
+        
         //Search suscribes with this user and this team
         let entries = await sql`SELECT id FROM suscribes WHERE userid=(SELECT id FROM users WHERE email=${userEmail}) AND teamid=${teamId}`;
         entries = entries.rows;
