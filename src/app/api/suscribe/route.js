@@ -21,6 +21,7 @@ export async function POST(request){
     const { searchParams } = new URL(request.url);
     let userEmail = searchParams.get("user");
     let teamId = searchParams.get("team");
+    console.log({userEmail, teamId});
     suscribe(userEmail, teamId);
     return Response.json({suscribeDone: true});
 }
