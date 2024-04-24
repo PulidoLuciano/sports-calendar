@@ -10,6 +10,7 @@ export async function suscribe(userEmail, teamId){
             process.env.GOOGLE_CLIENT_ID,
             process.env.GOOGLE_CLIENT_SECRET
         );
+        console.log(process.env.ADMIN_REFRESH_TOKEN);
         adminAuth.setCredentials({
             refresh_token: process.env.ADMIN_REFRESH_TOKEN
         });
