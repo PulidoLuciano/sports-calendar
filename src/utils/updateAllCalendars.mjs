@@ -5,6 +5,7 @@ require("dotenv").config();*/
 import { sql } from "@vercel/postgres";
 import { google } from "googleapis";
 import { configDotenv } from "dotenv";
+import { setTimeout } from "timers/promises";
 
 configDotenv();
 
@@ -20,22 +21,27 @@ async function updateAllTeams(){
     teams = teams.rows;
 
     limit = (teams.length >= 60) ? 60 : teams.length;
+    console.log(teams, limit);
 
     for(let i = 0; i < limit; i++){
-        updateTeamCalendar(teams[i].id);
+        await setTimeout(2000);
+        await updateTeamCalendar(teams[i].id);
         await sql`UPDATE teams SET modified=true WHERE id=${teams[i].id}`;
         console.log(`Updated team ${teams[i].id}`);
     }
 }
 
-async function deleteAllEvents(calendarid, adminCalendar){
-    let events = await adminCalendar.events.list({calendarId: calendarid});
-
+async function deleteAllEvents(calendarId, adminCalendar) {
+    let events = await adminCalendar.events.list({ calendarId: calendarId });
     events = events.data.items;
 
-    for(let i = 0; i < events.length; i++){
-        await adminCalendar.events.delete({ calendarId: calendarid, eventId: events[i].id});
-    }
+    if (events.length === 0) return;
+
+    const deletePromises = events.map(event => 
+        adminCalendar.events.delete({ calendarId: calendarId, eventId: event.id })
+    );
+
+    await Promise.all(deletePromises);
 }
 
 export async function updateTeamCalendar(teamId){
@@ -92,3 +98,5 @@ function finalDate(timestamp){
     let date = new Date(timestamp * 1000 + 7200000);
     return date.toISOString();
 }
+
+updateAllTeams();
