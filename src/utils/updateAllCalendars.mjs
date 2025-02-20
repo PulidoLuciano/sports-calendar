@@ -37,11 +37,10 @@ async function deleteAllEvents(calendarId, adminCalendar) {
 
     if (events.length === 0) return;
 
-    const deletePromises = events.map(event => 
-        adminCalendar.events.delete({ calendarId: calendarId, eventId: event.id })
-    );
-
-    await Promise.all(deletePromises);
+    for (const event of events) {
+        await adminCalendar.events.delete({ calendarId: calendarId, eventId: event.id });
+        await setTimeout(333);
+    }
 }
 
 export async function updateTeamCalendar(teamId){
